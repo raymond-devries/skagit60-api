@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "skagit60-api"
+version = "0.1.0"
+description = "Backed for upgraded skagit60 site."
+authors = ["raymond-devries <raymond.l.devries@gmail.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+fastapi = "^0.60.1"
+mongoengine = "^0.20.0"
+motor = "^2.1.0"
+uvicorn = "^0.11.8"
+
+[tool.poetry.dev-dependencies]
+pytest = "^6.0.1"
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
