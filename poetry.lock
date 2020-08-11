@@ -93,15 +93,17 @@ python-versions = "*"
 version = "1.0.1"
 
 [[package]]
-category = "main"
-description = "MongoEngine is a Python Object-Document Mapper for working with MongoDB."
-name = "mongoengine"
+category = "dev"
+description = "A Python utility / library to sort Python imports."
+name = "isort"
 optional = false
-python-versions = ">=3.5"
-version = "0.20.0"
+python-versions = ">=3.6,<4.0"
+version = "5.3.2"
 
-[package.dependencies]
-pymongo = ">=3.4,<4.0"
+[package.extras]
+colors = ["colorama (>=0.4.3,<0.5.0)"]
+pipfile_deprecated_finder = ["pipreqs", "requirementslib", "tomlkit (>=0.5.3)"]
+requirements_deprecated_finder = ["pipreqs", "pip-api"]
 
 [[package]]
 category = "dev"
@@ -293,7 +295,7 @@ python-versions = ">=3.6.1"
 version = "8.1"
 
 [metadata]
-content-hash = "d15f4a26a78aa0964241cfea82fdae471287c83ae547a6a92a18cd72ace05886"
+content-hash = "abc95f471d473185e9c95183d39aeff3424831c75384579501d52dcfe1a96764"
 lock-version = "1.0"
 python-versions = "^3.8"
 
@@ -345,9 +347,9 @@ iniconfig = [
     {file = "iniconfig-1.0.1-py3-none-any.whl", hash = "sha256:80cf40c597eb564e86346103f609d74efce0f6b4d4f30ec8ce9e2c26411ba437"},
     {file = "iniconfig-1.0.1.tar.gz", hash = "sha256:e5f92f89355a67de0595932a6c6c02ab4afddc6fcdc0bfc5becd0d60884d3f69"},
 ]
-mongoengine = [
-    {file = "mongoengine-0.20.0-py3-none-any.whl", hash = "sha256:6e127f45f71c2bc5e72461ec297a0c20f04c3ee0bf6dd869e336226e325db6ef"},
-    {file = "mongoengine-0.20.0.tar.gz", hash = "sha256:db9e5d587e5d74e52851e0e4a53fd744725bfa9918ae6070139f5ba9c62c6edf"},
+isort = [
+    {file = "isort-5.3.2-py3-none-any.whl", hash = "sha256:5196bd2f5b23dc91215734b1c96c6d28390061d69860a948094c12635d6d64e6"},
+    {file = "isort-5.3.2.tar.gz", hash = "sha256:ba83762132a8661d3525f87a86549712fb7d8da79eeb452e01f327ada9e87920"},
 ]
 more-itertools = [
     {file = "more-itertools-8.4.0.tar.gz", hash = "sha256:68c70cc7167bdf5c7c9d8f6954a7837089c6a36bf565383919bb595efb8a17e5"},
