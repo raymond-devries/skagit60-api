@@ -12,6 +12,6 @@ def get_db(db_name: str):
     return get_client()[db_name]
 
 
-def get_collection(collection_name: str):
+def get_collection(collection_name: str) -> AgnosticCollection:
     return get_db(DB_NAME)[collection_name]
 
