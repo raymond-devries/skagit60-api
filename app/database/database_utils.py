@@ -1,16 +1,12 @@
 from motor.core import AgnosticCollection
-from motor.motor_asyncio import AsyncIOMotorClient
+from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorDatabase
 
-DB_NAME = "skagit60"
-
-
-def get_client():
-    return AsyncIOMotorClient()
+from app.settings import DB_NAME
 
 
-def get_db(db_name: str):
-    return get_client()[db_name]
+def get_db():
+    return AsyncIOMotorClient()[DB_NAME]
 
 
-def get_collection(collection_name: str) -> AgnosticCollection:
-    return get_db(DB_NAME)[collection_name]
+def get_collection(name: str, db: AsyncIOMotorDatabase) -> AgnosticCollection:
+    return db[name]
