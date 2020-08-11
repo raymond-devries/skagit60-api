@@ -4,7 +4,6 @@ from bson.objectid import ObjectId
 from app.database import peaks
 from app.database.database_utils import get_collection
 from app.models import peak_model
-from app.settings import MAX_DB_QUERY
 
 
 @pytest.fixture
@@ -15,6 +14,8 @@ def fake_peak():
         elevation=1000,
         lat=45.77,
         long=120.68,
+        state="WA",
+        country="USA",
         peakbagger_link="https://peakbagger.com/test",
     )
 
