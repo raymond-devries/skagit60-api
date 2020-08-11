@@ -1,5 +1,5 @@
-from motor.motor_asyncio import AsyncIOMotorClient
 from motor.core import AgnosticCollection
+from motor.motor_asyncio import AsyncIOMotorClient
 
 DB_NAME = "skagit60"
 

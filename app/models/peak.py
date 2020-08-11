@@ -1,7 +1,8 @@
-from typing import Optional
-from pydantic import BaseModel, constr, conint, confloat, HttpUrl
-from bson import ObjectId
 import datetime
+from typing import Optional
+
+from bson import ObjectId
+from pydantic import BaseModel, HttpUrl, confloat, conint, constr
 
 
 class Peak(BaseModel):
