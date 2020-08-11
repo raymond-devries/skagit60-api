@@ -1,7 +1,5 @@
 import datetime
-from typing import Optional
 
-from bson import ObjectId
 from pydantic import BaseModel, HttpUrl, confloat, conint, constr
 
 
