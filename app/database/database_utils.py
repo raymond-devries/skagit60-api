@@ -14,4 +14,3 @@ def get_db(db_name: str):
 
 def get_collection(collection_name: str) -> AgnosticCollection:
     return get_db(DB_NAME)[collection_name]
-
