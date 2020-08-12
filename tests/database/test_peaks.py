@@ -1,6 +1,5 @@
 import pytest
 from bson.objectid import ObjectId
-from tests.models.test_peak_model import fake_peak
 
 from app.database import peaks
 from app.database.database_utils import get_collection
