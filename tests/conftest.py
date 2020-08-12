@@ -1,9 +1,10 @@
 import pytest
 from motor.motor_asyncio import AsyncIOMotorClient
+from tests import factories
 
+from app.database import peaks_db
 from app.database.database_utils import get_db
 from app.main import app
-from app.models import peak_model
 from app.settings import TEST_DB_NAME
 
 
@@ -28,14 +29,6 @@ def override_db():
 
 
 @pytest.fixture
-def fake_peak() -> peak_model.Peak:
-    return peak_model.Peak(
-        name="test",
-        display_name="testing",
-        elevation=1000,
-        lat=45.77,
-        long=120.68,
-        state="WA",
-        country="USA",
-        peakbagger_link="https://peakbagger.com/test",
-    )
+async def fill_db(fake_db):
+    inserts = [fake_peak.dict() for fake_peak in factories.PeakFactory.create_batch(60)]
+    await fake_db[peaks_db.COLLECTION_NAME].insert_many(inserts)
