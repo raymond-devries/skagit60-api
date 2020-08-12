@@ -19,7 +19,8 @@ class Peak(BaseModel):
     @validator("slug", pre=True, always=True)
     def create_slug(cls, v, values):
         return slugify(
-            f'{values["display_name"]} {values["state"]} {values["country"]} {values["elevation"]}'
+            f'{values["display_name"]} {values["state"]} {values["country"]} '
+            f'{values["elevation"]}'
         )
 
 

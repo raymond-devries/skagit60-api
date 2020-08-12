@@ -1,23 +1,9 @@
 import pytest
 from bson.objectid import ObjectId
+from tests.models.test_peak_model import fake_peak
 
 from app.database import peaks
 from app.database.database_utils import get_collection
-from app.models import peak_model
-
-
-@pytest.fixture
-def fake_peak():
-    return peak_model.Peak(
-        name="test",
-        display_name="testing",
-        elevation=1000,
-        lat=45.77,
-        long=120.68,
-        state="WA",
-        country="USA",
-        peakbagger_link="https://peakbagger.com/test",
-    )
 
 
 @pytest.mark.asyncio

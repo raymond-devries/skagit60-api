@@ -1,4 +1,3 @@
-from bson.objectid import ObjectId
 from motor.motor_asyncio import AsyncIOMotorDatabase
 
 from app.database.database_utils import get_collection
