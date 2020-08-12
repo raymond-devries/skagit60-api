@@ -1,16 +1,30 @@
 import pytest
 from motor.motor_asyncio import AsyncIOMotorClient
 
+from app.database.database_utils import get_db
+from app.main import app
 from app.models import peak_model
 from app.settings import TEST_DB_NAME
 
 
 @pytest.yield_fixture
-def fake_db():
+async def fake_db():
     client = AsyncIOMotorClient()
     db = client[TEST_DB_NAME]
     yield db
     client.drop_database(TEST_DB_NAME)
+
+
+async def create_fake_db():
+    client = AsyncIOMotorClient()
+    db = client[TEST_DB_NAME]
+    yield db
+    client.drop_database(TEST_DB_NAME)
+
+
+@pytest.fixture(autouse=True)
+def override_db():
+    app.dependency_overrides[get_db] = create_fake_db
 
 
 @pytest.fixture
