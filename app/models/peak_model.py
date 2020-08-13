@@ -24,6 +24,10 @@ class Peak(BaseModel):
         )
 
 
+class PeakInDB(Peak):
+    _id: str
+
+
 class Tick(BaseModel):
     climber: str
     date: datetime.date
