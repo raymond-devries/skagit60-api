@@ -1,13 +1,11 @@
 import uvicorn
 from fastapi import FastAPI
 
+from app.routers import peaks_router
+
 app = FastAPI()
 
-
-@app.get("/")
-def root():
-    return {"stuff": "hello world"}
-
+app.include_router(peaks_router.router)
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run("app.main:app", host="0.0.0.0", port=8000, reload=True)
