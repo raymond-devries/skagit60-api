@@ -8,6 +8,8 @@ services:
     command: pytest -v
     environment:
       - DB_SERVER=mongodbdocker
+    depends_on:
+      - mongodbdocker
 
   mongodbdocker:
     image: mongo:bionic
