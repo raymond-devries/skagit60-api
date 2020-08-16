@@ -30,5 +30,7 @@ def override_db():
 
 @pytest.fixture
 async def fill_db(fake_db):
-    inserts = [fake_peak.dict() for fake_peak in factories.PeakFactory.create_batch(60)]
+    inserts = [
+        fake_peak.dict() for fake_peak in factories.PeakOutFactory.create_batch(60)
+    ]
     await fake_db[peaks_db.COLLECTION_NAME].insert_many(inserts)

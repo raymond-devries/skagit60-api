@@ -12,6 +12,6 @@ async def get_peaks_db(db: AsyncIOMotorDatabase) -> list:
     return [peak for peak in await cursor.to_list(MAX_DB_QUERY)]
 
 
-async def create_peak_db(peak: peak_model.Peak, db: AsyncIOMotorDatabase) -> str:
+async def create_peak_db(peak: peak_model.PeakIn, db: AsyncIOMotorDatabase) -> str:
     insert = await get_collection(COLLECTION_NAME, db).insert_one(peak.dict())
     return str(insert.inserted_id)

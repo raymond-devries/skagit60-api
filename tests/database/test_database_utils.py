@@ -21,16 +21,3 @@ def test_get_collection(fake_db):
     assert isinstance(
         database_utils.get_collection("test", fake_db), AsyncIOMotorCollection
     )
-
-
-def test_clean_results():
-    cleaned_results = database_utils.clean_results(
-        [
-            {"_id": ObjectId("5f3464dc267e0b6a889c49b9")},
-            {"_id": ObjectId("5f34976e33f30ba3ed6601dd")},
-        ]
-    )
-    assert cleaned_results == [
-        {"_id": "5f3464dc267e0b6a889c49b9"},
-        {"_id": "5f34976e33f30ba3ed6601dd"},
-    ]

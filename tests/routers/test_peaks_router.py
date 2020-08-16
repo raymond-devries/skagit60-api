@@ -14,7 +14,7 @@ async def test_get_peaks(fill_db):
 
 @pytest.mark.asyncio
 async def test_add_peak():
-    peak_json = factories.PeakFactory().json()
+    peak_json = factories.PeakInFactory().json()
     async with AsyncClient(app=app, base_url="http://test") as ac:
         response = await ac.post("/peak/", data=peak_json)
     assert response.status_code == 200
