@@ -5,19 +5,19 @@ from tests import factories
 from app.database import peaks_db
 from app.database.database_utils import get_db
 from app.main import app
-from app.settings import TEST_DB_NAME
+from app.settings import DB_SERVER, TEST_DB_NAME
 
 
 @pytest.yield_fixture
 async def fake_db():
-    client = AsyncIOMotorClient()
+    client = AsyncIOMotorClient(DB_SERVER)
     db = client[TEST_DB_NAME]
     yield db
     client.drop_database(TEST_DB_NAME)
 
 
 async def create_fake_db():
-    client = AsyncIOMotorClient()
+    client = AsyncIOMotorClient(DB_SERVER)
     db = client[TEST_DB_NAME]
     yield db
     client.drop_database(TEST_DB_NAME)

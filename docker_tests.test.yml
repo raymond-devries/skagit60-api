@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+  sut:
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+    command: pytest -v
+    environment:
+      - DB_SERVER=mongodbdocker
+
+  mongodbdocker:
+    image: mongo:bionic
