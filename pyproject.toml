@@ -20,6 +20,8 @@ black = "^19.10b0"
 pre-commit = "^2.6.0"
 httpx = "^0.14.1"
 factory-boy = "^2.12.0"
+pytest-cov = "^2.10.1"
+pytest-mock = "^3.2.0"
 
 [tool.black]
 target-version = ["py38"]
