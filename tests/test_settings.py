@@ -9,7 +9,3 @@ def test_get_env_no_env(monkeypatch):
 def test_get_env_with_env(monkeypatch):
     monkeypatch.setenv("DB_SERVER", "test_server")
     assert get_env("DB_SERVER", "localhost") == "test_server"
-
-
-def test_fail():
-    assert False
