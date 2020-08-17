@@ -20,12 +20,14 @@ async def create_fake_db():
     client = AsyncIOMotorClient(DB_SERVER)
     db = client[TEST_DB_NAME]
     yield db
-    client.drop_database(TEST_DB_NAME)
 
 
-@pytest.fixture(autouse=True)
+@pytest.yield_fixture(autouse=True)
 def override_db():
     app.dependency_overrides[get_db] = create_fake_db
+    yield
+    client = AsyncIOMotorClient(DB_SERVER)
+    client.drop_database(TEST_DB_NAME)
 
 
 @pytest.fixture

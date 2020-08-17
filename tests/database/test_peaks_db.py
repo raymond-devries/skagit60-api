@@ -18,6 +18,14 @@ async def test_create_peaks(fake_db):
 
 
 @pytest.mark.asyncio
+async def test_create_duplicate_peaks(fake_db):
+    fake_peak = factories.PeakInFactory()
+    await get_collection(peaks_db.COLLECTION_NAME, fake_db).insert_one(fake_peak.dict())
+    with pytest.raises(ValueError):
+        await peaks_db.create_peak_db(fake_peak, fake_db)
+
+
+@pytest.mark.asyncio
 async def test_get_peaks(fake_db):
     inserts = [
         fake_peak.dict() for fake_peak in factories.PeakInFactory.create_batch(size=10)

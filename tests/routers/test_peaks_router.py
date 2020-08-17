@@ -17,4 +17,14 @@ async def test_add_peak():
     peak_json = factories.PeakInFactory().json()
     async with AsyncClient(app=app, base_url="http://test") as ac:
         response = await ac.post("/peak/", data=peak_json)
-    assert response.status_code == 200
+    assert response.status_code == 201
+
+
+@pytest.mark.asyncio
+async def test_add_duplicate_peak():
+    peak_json = factories.PeakInFactory().json()
+    async with AsyncClient(app=app, base_url="http://test") as ac:
+        await ac.post("/peak/", data=peak_json)
+    async with AsyncClient(app=app, base_url="http://test") as ac:
+        response = await ac.post("/peak/", data=peak_json)
+    assert response.status_code == 409
