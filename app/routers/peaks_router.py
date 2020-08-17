@@ -18,9 +18,7 @@ async def get_peaks(db=Depends(get_db)):
 @router.post(
     "/peak/", tags=["peaks"], response_model=str, status_code=status.HTTP_201_CREATED
 )
-async def add_peak(
-    peak: peak_model.PeakIn, response: Response, db=Depends(get_db),
-):
+async def add_peak(peak: peak_model.PeakIn, response: Response, db=Depends(get_db)):
     try:
         return await peaks_db.create_peak_db(peak, db)
     except DuplicateKeyError as e:
