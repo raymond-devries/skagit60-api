@@ -1,10 +1,11 @@
 import pytest
+from httpx import AsyncClient
 from motor.motor_asyncio import AsyncIOMotorClient
 from tests import factories
 
+from app import main
 from app.database import peaks_db
 from app.database.database_utils import get_db
-from app.main import app
 from app.settings import DB_SERVER, TEST_DB_NAME
 
 
@@ -19,15 +20,22 @@ async def fake_db():
 async def create_fake_db():
     client = AsyncIOMotorClient(DB_SERVER)
     db = client[TEST_DB_NAME]
-    yield db
+    return db
 
 
 @pytest.yield_fixture(autouse=True)
 def override_db():
-    app.dependency_overrides[get_db] = create_fake_db
+    main.app.dependency_overrides[get_db] = create_fake_db
     yield
     client = AsyncIOMotorClient(DB_SERVER)
     client.drop_database(TEST_DB_NAME)
+
+
+@pytest.yield_fixture
+async def client(fake_db):
+    await main.start_up_tasks(db=fake_db)
+    async with AsyncClient(app=main.app, base_url="http://test") as ac:
+        yield ac
 
 
 @pytest.fixture

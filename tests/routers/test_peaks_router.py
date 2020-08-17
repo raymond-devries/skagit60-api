@@ -1,30 +1,23 @@
 import pytest
-from httpx import AsyncClient
 from tests import factories
-
-from app.main import app
 
 
 @pytest.mark.asyncio
-async def test_get_peaks(fill_db):
-    async with AsyncClient(app=app, base_url="http://test") as ac:
-        response = await ac.get("/peaks/")
+async def test_get_peaks(fill_db, client):
+    response = await client.get("/peaks/")
     assert response.status_code == 200
 
 
 @pytest.mark.asyncio
-async def test_add_peak():
+async def test_add_peak(client):
     peak_json = factories.PeakInFactory().json()
-    async with AsyncClient(app=app, base_url="http://test") as ac:
-        response = await ac.post("/peak/", data=peak_json)
+    response = await client.post("/peak/", data=peak_json)
     assert response.status_code == 201
 
 
 @pytest.mark.asyncio
-async def test_add_duplicate_peak():
+async def test_add_duplicate_peak(client):
     peak_json = factories.PeakInFactory().json()
-    async with AsyncClient(app=app, base_url="http://test") as ac:
-        await ac.post("/peak/", data=peak_json)
-    async with AsyncClient(app=app, base_url="http://test") as ac:
-        response = await ac.post("/peak/", data=peak_json)
-    assert response.status_code == 409
+    response = await client.post("/peak/", data=peak_json)
+    response2 = await client.post("/peak/", data=peak_json)
+    assert 409 or 201 in [response.status_code, response2.status_code]

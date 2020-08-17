@@ -1,5 +1,4 @@
 import pytest
-from bson.objectid import ObjectId
 from motor.motor_asyncio import AsyncIOMotorCollection, AsyncIOMotorDatabase
 
 from app.database import database_utils
