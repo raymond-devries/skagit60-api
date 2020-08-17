@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.test
-    command: pytest -v
+    command: pytest
     environment:
       - DB_SERVER=mongodbdocker
     depends_on:
