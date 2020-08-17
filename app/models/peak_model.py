@@ -21,7 +21,7 @@ class PeakIn(BaseModel):
 
 
 class PeakWithSlug(PeakIn):
-    slug: Optional[str] = None
+    slug: Optional[str] = Field(None, example="mount-baker-wa-usa-10781")
 
     @validator("slug", pre=True, always=True)
     def create_slug(cls, v, values):
