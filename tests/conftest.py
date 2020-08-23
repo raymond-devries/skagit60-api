@@ -1,7 +1,7 @@
 import pytest
 from httpx import AsyncClient
 from motor.motor_asyncio import AsyncIOMotorClient
-from tests import factories
+from tests.factories import peak_factories
 
 from app import main
 from app.database import peaks_db
@@ -41,6 +41,6 @@ async def client(fake_db):
 @pytest.fixture
 async def fill_db(fake_db):
     inserts = [
-        fake_peak.dict() for fake_peak in factories.PeakOutFactory.create_batch(60)
+        fake_peak.dict() for fake_peak in peak_factories.PeakOutFactory.create_batch(60)
     ]
     await fake_db[peaks_db.COLLECTION_NAME].insert_many(inserts)

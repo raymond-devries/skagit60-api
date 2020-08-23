@@ -1,7 +1,7 @@
 import pytest
 from bson.objectid import ObjectId
 from pymongo.errors import DuplicateKeyError
-from tests import factories
+from tests.factories import peak_factories
 
 from app.database import peaks_db
 from app.database.database_utils import get_collection
@@ -9,7 +9,7 @@ from app.database.database_utils import get_collection
 
 @pytest.mark.asyncio
 async def test_create_peaks(fake_db):
-    fake_peak = factories.PeakInFactory()
+    fake_peak = peak_factories.PeakInFactory()
     result = await peaks_db.create_peak_db(fake_peak, fake_db)
     created_peak = await get_collection(peaks_db.COLLECTION_NAME, fake_db).find_one(
         ObjectId(result)
@@ -20,7 +20,7 @@ async def test_create_peaks(fake_db):
 
 @pytest.mark.asyncio
 async def test_create_duplicate_peaks(fake_db, client):
-    fake_peak = factories.PeakInFactory()
+    fake_peak = peak_factories.PeakInFactory()
     await get_collection(peaks_db.COLLECTION_NAME, fake_db).insert_one(fake_peak.dict())
     with pytest.raises(DuplicateKeyError):
         await peaks_db.create_peak_db(fake_peak, fake_db)
@@ -29,7 +29,8 @@ async def test_create_duplicate_peaks(fake_db, client):
 @pytest.mark.asyncio
 async def test_get_peaks(fake_db):
     inserts = [
-        fake_peak.dict() for fake_peak in factories.PeakInFactory.create_batch(size=10)
+        fake_peak.dict()
+        for fake_peak in peak_factories.PeakInFactory.create_batch(size=10)
     ]
     await get_collection(peaks_db.COLLECTION_NAME, fake_db).insert_many(inserts)
     results = await peaks_db.get_peaks_db(fake_db)

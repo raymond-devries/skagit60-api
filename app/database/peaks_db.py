@@ -8,7 +8,7 @@ from app.settings import MAX_DB_QUERY
 COLLECTION_NAME = "peaks"
 
 
-async def create_index(db):
+async def create_peak_index(db):
     collection = get_collection(COLLECTION_NAME, db)
     await collection.create_index(
         [
@@ -21,11 +21,11 @@ async def create_index(db):
     )
 
 
-async def get_peaks_db(db: AsyncIOMotorDatabase) -> list:
+async def get_peaks_db(db) -> list:
     cursor = get_collection(COLLECTION_NAME, db).find()
     return [peak for peak in await cursor.to_list(MAX_DB_QUERY)]
 
 
-async def create_peak_db(peak: peak_model.PeakIn, db: AsyncIOMotorDatabase) -> str:
+async def create_peak_db(peak: peak_model.PeakIn, db) -> str:
     insert = await get_collection(COLLECTION_NAME, db).insert_one(peak.dict())
     return str(insert.inserted_id)
