@@ -1,11 +1,22 @@
 import uvicorn
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 from app.database import peaks_db, users_db
 from app.database.database_utils import get_db
 from app.routers import peaks_router
 
 app = FastAPI()
+
+origins = ["http://localhost", "http://localhost:8080", "http://localhost:8000"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.on_event("startup")
