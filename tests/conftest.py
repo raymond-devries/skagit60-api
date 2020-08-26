@@ -33,7 +33,7 @@ def override_db():
 
 @pytest.yield_fixture
 async def client(fake_db):
-    await main.start_up_tasks(db=fake_db)
+    [await main.start_up_tasks(db=fake_db) for _ in range(2)]
     async with AsyncClient(app=main.app, base_url="http://test") as ac:
         yield ac
 

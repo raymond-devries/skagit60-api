@@ -21,8 +21,8 @@ async def test_create_peaks(fake_db):
 @pytest.mark.asyncio
 async def test_create_duplicate_peaks(fake_db, client):
     fake_peak = peak_factories.PeakInFactory()
-    await get_collection(peaks_db.COLLECTION_NAME, fake_db).insert_one(fake_peak.dict())
     with pytest.raises(DuplicateKeyError):
+        await peaks_db.create_peak_db(fake_peak, fake_db)
         await peaks_db.create_peak_db(fake_peak, fake_db)
 
 
