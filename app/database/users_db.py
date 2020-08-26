@@ -13,3 +13,9 @@ async def create_user_indexes(db):
 
 async def create_user_db(user: user_model.UserIn, db):
     await get_collection(COLLECTION_NAME, db).insert_one(user.dict())
+
+
+async def get_user_db(db, username: str = "", email: str = ""):
+    return await get_collection(COLLECTION_NAME, db).find_one(
+        {"$or": [{"username": username}, {"email": email}]}
+    )
