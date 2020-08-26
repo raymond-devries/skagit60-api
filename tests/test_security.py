@@ -1,7 +1,8 @@
 import pytest
+from jose import jwt
 from tests.factories import user_factories
 
-from app import security
+from app import security, settings
 from app.database import users_db
 
 
@@ -31,3 +32,10 @@ async def test_authenticate_user_wrong_password(fake_db):
 @pytest.mark.asyncio
 async def test_authenticate_user_that_doesnt_exist(fake_db):
     assert await security.authenticate_user(fake_db, "pass", username="person") is False
+
+
+def test_create_access_token():
+    user_id = "5f39ff3e0d49fd086cb03da2"
+    token = security.create_user_access_token("5f39ff3e0d49fd086cb03da2")
+    decoded = jwt.decode(token, settings.SECRET_KEY)
+    assert decoded["sub"] == user_id
