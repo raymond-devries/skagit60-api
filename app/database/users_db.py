@@ -1,6 +1,5 @@
 from app.database.database_utils import get_collection
 from app.models import user_model
-from app.settings import MAX_DB_QUERY
 
 COLLECTION_NAME = "users"
 
