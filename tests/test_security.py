@@ -1,10 +1,12 @@
+from datetime import datetime, timedelta, timezone
+
 import pytest
+from fastapi import HTTPException
 from jose import jwt
 from tests.factories import user_factories
 
 from app import security, settings
 from app.database import users_db
-from app.models import user_model
 
 
 @pytest.mark.asyncio
@@ -42,6 +44,35 @@ async def test_authenticate_user_wrong_password(fake_db):
 @pytest.mark.asyncio
 async def test_authenticate_user_that_doesnt_exist(fake_db):
     assert await security.authenticate_user("user", "password", fake_db,) is False
+
+
+@pytest.mark.asyncio
+async def test_get_current_user_valid_user(fake_db):
+    username = "user1"
+    user = user_factories.UserInFactory(username=username)
+    await users_db.create_user_db(user, fake_db)
+    token = security.create_user_access_token(username)
+    assert await security.get_current_user(token=token, db=fake_db) == user
+
+
+@pytest.mark.asyncio
+async def test_get_current_user_invalid_user(fake_db):
+    token = security.create_user_access_token("user2")
+    with pytest.raises(HTTPException):
+        await security.get_current_user(token=token, db=fake_db)
+
+
+@pytest.mark.asyncio
+async def test_get_current_active_user_expired_token(fake_db):
+    username = "user3"
+    user = user_factories.UserInFactory(username=username)
+    await users_db.create_user_db(user, fake_db)
+    token = jwt.encode(
+        {"sub": username, "exp": datetime.now(timezone.utc) - timedelta(days=3)},
+        settings.SECRET_KEY,
+    )
+    with pytest.raises(HTTPException):
+        await security.get_current_user(token=token, db=fake_db)
 
 
 def test_create_access_token():
