@@ -14,5 +14,9 @@ class User(BaseModel):
     active: bool
 
 
+class UserBefore(User):
+    unhashed_password: str
+
+
 class UserIn(User):
     hashed_password: str
