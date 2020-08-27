@@ -23,10 +23,3 @@ class PeakInFactory(factory.Factory):
 class PeakWithSlugFactory(PeakInFactory):
     class Meta:
         model = peak_model.PeakWithSlug
-
-
-class PeakOutFactory(PeakWithSlugFactory):
-    class Meta:
-        model = peak_model.PeakOut
-
-    _id = factory.Faker("pystr", min_chars=24, max_chars=24)

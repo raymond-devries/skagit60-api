@@ -4,8 +4,6 @@ from typing import Optional
 from pydantic import BaseModel, Field, HttpUrl, validator
 from slugify import slugify
 
-from app.models.custom_types import PydanticObjectId
-
 
 class PeakIn(BaseModel):
     name: str = Field(max_length=100, example="Baker, Mount")
@@ -29,10 +27,6 @@ class PeakWithSlug(PeakIn):
             f'{values["display_name"]} {values["state"]} {values["country"]} '
             f'{values["elevation"]}'
         )
-
-
-class PeakOut(PeakWithSlug):
-    id: PydanticObjectId = Field(example="5f39bd96c746784360738e72", alias="_id")
 
 
 class Tick(BaseModel):

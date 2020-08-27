@@ -25,6 +25,6 @@ async def get_peaks_db(db) -> list:
     return [peak for peak in await cursor.to_list(MAX_DB_QUERY)]
 
 
-async def create_peak_db(peak: peak_model.PeakIn, db) -> str:
-    insert = await get_collection(COLLECTION_NAME, db).insert_one(peak.dict())
-    return str(insert.inserted_id)
+async def create_peak_db(peak: peak_model.PeakIn, db):
+    peak = peak_model.PeakWithSlug(**peak.dict())
+    await get_collection(COLLECTION_NAME, db).insert_one(peak.dict())

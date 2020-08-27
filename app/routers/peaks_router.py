@@ -10,7 +10,7 @@ from app.models import peak_model
 router = APIRouter()
 
 
-@router.get("/peaks/", tags=["peaks"], response_model=List[peak_model.PeakOut])
+@router.get("/peaks/", tags=["peaks"], response_model=List[peak_model.PeakWithSlug])
 async def get_peaks(db=Depends(get_db)):
     return await peaks_db.get_peaks_db(db)
 
