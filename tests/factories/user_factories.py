@@ -14,18 +14,30 @@ class UserFactory(factory.Factory):
     email = factory.Faker("email")
     first_name = factory.Faker("first_name")
     last_name = factory.Faker("last_name")
-    active = True
 
 
-class UserInFactory(UserFactory):
+class UserSignUpFactory(UserFactory):
     class Meta:
-        model = user_model.UserIn
-
-    hashed_password = factory.Faker("pystr", min_chars=30, max_chars=40)
-
-
-class UserBeforeFactory(UserFactory):
-    class Meta:
-        model = user_model.UserBefore
+        model = user_model.UserSignUp
 
     unhashed_password = factory.Faker("password")
+
+
+class UserBeforeDbFactory(UserFactory):
+    class Meta:
+        model = user_model.UserBeforeDb
+
+    active = True
+    staff = False
+    admin = False
+    unhashed_password = factory.Faker("password")
+
+
+class UserInDbFactory(UserFactory):
+    class Meta:
+        model = user_model.UserInDb
+
+    active = True
+    staff = False
+    admin = False
+    hashed_password = factory.Faker("pystr", min_chars=30, max_chars=40)

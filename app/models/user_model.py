@@ -17,12 +17,21 @@ class User(BaseModel):
     email: str
     first_name: str
     last_name: str
-    active: bool
 
 
-class UserBefore(User):
+class UserSignUp(User):
     unhashed_password: str
 
 
-class UserIn(User):
+class _UserDb(User):
+    active: bool
+    staff: bool = False
+    admin: bool = False
+
+
+class UserBeforeDb(_UserDb):
+    unhashed_password: str
+
+
+class UserInDb(_UserDb):
     hashed_password: str

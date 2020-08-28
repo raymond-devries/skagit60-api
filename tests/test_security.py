@@ -13,7 +13,7 @@ from app.database import users_db
 async def test_authenticate_user_correct_password(fake_db):
     test_password = "testing123"
     hashed_password = security.crypt.hash(test_password)
-    user = user_factories.UserInFactory(hashed_password=hashed_password)
+    user = user_factories.UserInDbFactory(hashed_password=hashed_password)
     await users_db.create_user_db(user, fake_db)
     assert (
         await security.authenticate_user(user.username, test_password, fake_db) == user
@@ -24,7 +24,7 @@ async def test_authenticate_user_correct_password(fake_db):
 async def test_authenticate_user_user_not_active(fake_db):
     test_password = "testing123"
     hashed_password = security.crypt.hash(test_password)
-    user = user_factories.UserInFactory(hashed_password=hashed_password, active=False)
+    user = user_factories.UserInDbFactory(hashed_password=hashed_password, active=False)
     await users_db.create_user_db(user, fake_db)
     assert (
         await security.authenticate_user(user.username, test_password, fake_db) is False
@@ -34,7 +34,7 @@ async def test_authenticate_user_user_not_active(fake_db):
 @pytest.mark.asyncio
 async def test_authenticate_user_wrong_password(fake_db):
     hashed_password = security.crypt.hash("testing312")
-    user = user_factories.UserInFactory(hashed_password=hashed_password)
+    user = user_factories.UserInDbFactory(hashed_password=hashed_password)
     await users_db.create_user_db(user, fake_db)
     assert (
         await security.authenticate_user(user.username, "password", fake_db,) is False
@@ -49,7 +49,7 @@ async def test_authenticate_user_that_doesnt_exist(fake_db):
 @pytest.mark.asyncio
 async def test_get_current_user_valid_user(fake_db):
     username = "user1"
-    user = user_factories.UserInFactory(username=username)
+    user = user_factories.UserInDbFactory(username=username)
     await users_db.create_user_db(user, fake_db)
     token = security.create_user_access_token(username)
     assert await security.get_current_user(token=token, db=fake_db) == user
@@ -65,7 +65,7 @@ async def test_get_current_user_invalid_user(fake_db):
 @pytest.mark.asyncio
 async def test_get_current_active_user_expired_token(fake_db):
     username = "user3"
-    user = user_factories.UserInFactory(username=username)
+    user = user_factories.UserInDbFactory(username=username)
     await users_db.create_user_db(user, fake_db)
     token = jwt.encode(
         {"sub": username, "exp": datetime.now(timezone.utc) - timedelta(days=3)},
@@ -84,7 +84,7 @@ def test_create_access_token():
 
 @pytest.mark.asyncio
 async def test_create_user_and_hash_password(fake_db):
-    user_before = user_factories.UserBeforeFactory()
+    user_before = user_factories.UserBeforeDbFactory()
     await security.create_user_and_hash_password(user_before, fake_db)
     created_user = await users_db.get_user_db(user_before.username, fake_db)
     assert "unhashed_password" not in created_user

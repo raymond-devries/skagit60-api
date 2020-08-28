@@ -10,7 +10,7 @@ async def create_user_indexes(db):
     await collection.create_index("email", unique=True)
 
 
-async def create_user_db(user: user_model.UserIn, db):
+async def create_user_db(user: user_model.UserInDb, db):
     await get_collection(COLLECTION_NAME, db).insert_one(user.dict())
 
 

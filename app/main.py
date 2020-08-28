@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.database import peaks_db, users_db
 from app.database.database_utils import get_db
-from app.routers import peaks_router
+from app.routers import peaks_router, user_router
 
 app = FastAPI()
 
@@ -28,6 +28,7 @@ async def start_up_tasks(db=None):
 
 
 app.include_router(peaks_router.router)
+app.include_router(user_router.router)
 
 if __name__ == "__main__":
     uvicorn.run("app.main:app", host="0.0.0.0", port=8000, reload=True)
