@@ -2,7 +2,7 @@
 name = "skagit60-api"
 version = "0.1.0"
 description = "Backed for upgraded skagit60 site."
-authors = ["raymond-devries <raymond.l.devries@gmail.com>"]
+authors = ["raymond-devries"]
 license = "MIT"
 
 [tool.poetry.dependencies]
